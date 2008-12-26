@@ -55,7 +55,7 @@ class doTwit
 		  
 	}
 		$res =
-		'<div class="doTwit">'.
+		'<div id="doTwit">'.
 		($w->title ? '<h2><a href="http://twitter.com/'.$w->idTwiter.'">'.$w->title.'</a></h2>' : '').
 		'<ul>';
 		
@@ -63,14 +63,14 @@ class doTwit
 		
 		if( count($xml->status) == 0 )
 		{
-			$res .= 'Données indisponible sur Twitter !';
+			$res .= 'Donn�es indisponible sur Twitter !';
 			return $res;
 		}
 		
 		foreach($xml->status as $elm) {
 			
 			$twi['id'][$nb] = (int) $elm->id;
-			$twi['desc'][$nb] = eregi_replace("(http|mailto|news|ftp|https)://(([-éa-z0-9\/\.\?_=#@:~])*)", "<a href=\"\\1://\\2\" target=\"_blank\" style=\"color:blue;\">\\1://\\2</a>",$elm->text);
+			$twi['desc'][$nb] = eregi_replace("(http|mailto|news|ftp|https)://(([-éa-z0-9\/\.\?_=#@:~])*)", "<a href=\"\\1://\\2\" target=\"_blank\">\\1://\\2</a>",$elm->text);
 			$twi['screen_name'][$nb] = (string) $elm->user->screen_name;
 			$twi['name'][$nb] = (string) $elm->user->name;
 			$twi['location'][$nb] = (string) $elm->user->location;
@@ -78,8 +78,8 @@ class doTwit
 			if( $w->display_profil_image ) $twi['img'][$nb] = eregi_replace("_normal.", "_mini.",$elm->user->profile_image_url);
 			if( $w->display_timeout) {
 				$twi['time'][$nb] = ((int) strtotime($elm->created_at));
-				$twi['date'][$nb] = date('d/m/Y H\hi', $twi['time'][$nb]);
-				$twi['desc'][$nb] .= ' <a href="http://twitter.com/'.$twi['screen_name'][$nb].'/statuses/'.$twi['id'][$nb].'" target="_blank">depuis '. $twi['date'][$nb].'</a>';
+				$twi['date'][$nb] = date('d F Y, H:i', $twi['time'][$nb]);
+				$twi['desc'][$nb] .= ' <a class="date" href="http://twitter.com/'.$twi['screen_name'][$nb].'/statuses/'.$twi['id'][$nb].'" target="_blank"> '. $twi['date'][$nb].'</a>';
 				
 			}
 						
@@ -92,21 +92,22 @@ class doTwit
 		for ($i=0;$i<$nb;$i++) {
 
 			if( $w->display_profil_image && $twi['img'][$i] != '' ) {
-				$res .= '<li class="img" style="background: none;padding-left:2px;border-bottom: 1px solid silver;">';
-				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" target="_blank" style="font-weight:bold;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
-				$res .= '<img src="'.$twi['img'][$i].'" alt="'.$twi['name'][$i].'" style="float:left;margin-right:3px;margin-bottom:2px;border:1px solid silver;" />';
-				$res .= '</a>';
-				$res .= '<div style="word-wrap: break-word;padding-left:30px;">';
-				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" target="_blank" style="font-weight:bold;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
-				$res .= $twi['screen_name'][$i].'</a> ';
-				$res .= $twi['desc'][$i].'</div>';
-				$res .= '<div style="clear:both;height:1px;">&nbsp;</div></li>';
+				$res .= '<li>';
+				$res .= '<span class="twitter-username">';
+				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" target="_blank" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
+				$res .= '<img src="'.$twi['img'][$i].'" alt="'.$twi['name'][$i].'" />';
+				$res .= $twi['screen_name'][$i].'</a>';
+				$res .= '</span>';
+				$res .= '<span class="twitter-content">';
+				$res .= $twi['desc'][$i];
+				$res .= '</span>';
+				$res .= '</li>';
 			}else {
-				$res .= '<li style="border-bottom: 1px solid silver;">';
-				$res .= '<div style="word-wrap: break-word;">';
-				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" target="_blank" style="font-weight:bold;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
+				$res .= '<li>';
+				$res .= '<span class="twitter-username">';
+				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" target="_blank" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
 				$res .= $twi['screen_name'][$i];
-				$res .= '</a> '.$twi['desc'][$i].'</div>';
+				$res .= '</a></span><span class="twitter-content">'.$twi['desc'][$i].'</span>';
 				$res .= '</li>';				
 			}
 			
