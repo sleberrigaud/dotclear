@@ -1,0 +1,95 @@
+/* ***** BEGIN LICENSE BLOCK *****
+#
+# This is part of Aorakits, a set of themes for DotClear. 
+# Copyright (c) 2006 Kozlika and contributors. All rights
+# reserved.
+#
+ * ***** END LICENSE BLOCK *****/
+ 
+html, body, #page, #top, #prelude, #wrapper, #footer,
+#main, #content,
+#sidebar, #blognav, #blogextra {
+    margin : 0;
+    padding : 0;
+}
+
+body {
+    text-align : center;
+}
+
+#page {
+    position: relative; /* to place the doTwit */
+    margin : 0 auto;
+    text-align : left;
+    width : 100%;
+}
+
+#top {
+    height : 278px;
+}
+
+#top h1 {
+    position: absolute;
+    top: 130px;
+    right: 0;
+    margin : 0;
+    padding : .3em 5em .1em .3em;
+}
+
+#wrapper
+{
+
+/*    border-top: #aaa 35px solid; */
+}
+
+#main {
+    width : 100%;
+    margin : 0 -500px 0 0;
+    float : left;
+}
+
+#content {
+    margin : 0 500px 0 0;
+    padding : 1em 2em;
+}
+
+#footer {
+    clear : both;
+    text-align:center;
+    height : 30px;
+}
+
+#sidebar {
+    width : 500px;
+    float : right;
+}
+
+/* blognav (width + padding) + blogextra (width + padding) < sidebar (width) */
+#blognav {
+    width : 238px;
+    float : left;
+    margin : 0;
+    padding : 6px;
+    overflow:hidden;
+}
+
+#blogextra {
+    width : 238px;
+    margin : 0;
+    padding : 6px;
+    float : right;
+    overflow:hidden;
+}
+
+#prelude {
+    height: 1em;
+}
+
+#doTwit {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 282px;
+    left: 0;
+    width: 100%;
+}
